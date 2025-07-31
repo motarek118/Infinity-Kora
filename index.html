@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Infinity Kora</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <script type="module" src="js/main.js"></script>
+
+</head>
+<body>
+
+  <!-- Navbar -->
+  <header id="navbar">
+    <div class="container nav-container">
+      <img src="images/logo.png" alt="Infinity Kora" class="logo" />
+      <nav>
+        <ul>
+          <li><a href="#home" class="nav-link active">Home</a></li>
+          <li><a href="#vision" class="nav-link">Our Vision</a></li>
+          <li><a href="#events" class="nav-link">Upcoming Events</a></li>
+          <li><a href="#contact" class="nav-link">Contact Us</a></li>
+          <li><a href="#" class="nav-link">EN/AR</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section id="home" class="hero-section">
+    <div class="hero-content">
+<h1 class="gradient-heading">Welcome To Infinity Kora</h1>
+<h2>Join The Champions.<br />Prove Your Skills.</h2>
+<div style="text-align: center;">
+  <button id="getStartedBtn">Get Started</button>
+</div>
+
+    </div>
+  </section>
+
+  <!-- Login Modal -->
+  <div id="loginModal" class="modal hidden">
+    <div class="modal-content">
+      <span class="close-btn" onclick="closeModal('loginModal')">✖</span>
+      <img src="images/logo.png" class="modal-logo" />
+      <h2>Welcome Back</h2>
+      <p>Ready to conquer the pitch?</p>
+      <input type="text" placeholder="Email or Phone Number" id="loginEmail" />
+      <input type="password" placeholder="Password" id="loginPassword" />
+      <button onclick="loginUser()">Login</button>
+      <p class="switch-modal">Don’t have an account? <span onclick="openModal('signupModal')">Sign up here</span></p>
+      <div id="loginMessage"></div>
+    </div>
+  </div>
+
+  <!-- Sign Up Modal -->
+  <div id="signupModal" class="modal hidden">
+    <div class="modal-content">
+      <span class="close-btn" onclick="closeModal('signupModal')">✖</span>
+      <img src="images/logo.png" class="modal-logo" />
+      <h2>Sign Up</h2>
+      <p>Let’s build your legend!</p>
+      <input type="text" id="signupName" placeholder="Full Name" />
+      <input type="number" id="signupAge" placeholder="Age" />
+      <select id="signupCity">
+        <option value="">Select City</option>
+        <option>Cairo</option>
+        <option>Alexandria</option>
+        <option>Giza</option>
+        <!-- Add more cities -->
+      </select>
+      <input type="email" id="signupEmail" placeholder="Email" />
+      <input type="text" id="signupPhone" placeholder="Phone (11 digits)" />
+      <input type="password" id="signupPassword" placeholder="Password" />
+      <input type="password" id="signupConfirm" placeholder="Confirm Password" />
+      <select id="signupRole">
+        <option value="">Choose Role</option>
+        <option value="player">Player</option>
+        <option value="fan">Fan</option>
+      </select>
+      <button onclick="signupUser()">Sign Up</button>
+      <div id="signupMessage"></div>
+    </div>
+  </div>
+
+  <!-- Vision Section -->
+  <section id="vision" class="vision-section">
+    <h2>OUR VISION</h2>
+    <p class="vision-intro">
+      At <span class="highlight">Infinity Kora</span>, we believe that local talent deserves global attention.<br/>
+      We’re not just building a football league — we’re building a movement.
+    </p>
+
+    <div class="vision-cards">
+      <div class="vision-card">
+        <h3>Fair Opportunities</h3>
+        <p>Every player, regardless of background, gets the chance to shine through our platform.</p>
+      </div>
+      <div class="vision-card">
+        <h3>Community Building</h3>
+        <p>We connect passionate fans and rising stars to grow the future of Egyptian football together.</p>
+      </div>
+      <div class="vision-card">
+        <h3>Big Dreams, Small Teams</h3>
+        <p>We empower small local teams to dream big and rise to the top with real competitions.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Events Section -->
+<!-- Events Section -->
+<section id="events" class="events-section">
+  <h2>Upcoming Events</h2>
+  <div id="upcomingEventsContainer" class="events-container"></div>
+</section>
+
+
+  <!-- Footer / Contact -->
+  <footer id="contact">
+    <h3>Contact Us</h3>
+    <p>📞 +201154456523 | 📧 example@email.com</p>
+    <div class="social-icons">
+      <img src="images/facebook.png" alt="Facebook" />
+      <img src="images/instagram.png" alt="Instagram" />
+      <img src="images/tiktok.png" alt="TikTok" />
+    </div>
+    <p>© 2025 Infinity Kora. All rights reserved.</p>
+  </footer>
+
+</body>
+</html>

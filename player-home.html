@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Player Dashboard | Infinity Kora</title>
+  <link rel="stylesheet" href="css/player-style.css" />
+  <script type="module" src="js/player.js" defer></script>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap">
+</head>
+<body>
+
+<!-- ✅ Navbar -->
+<nav id="navbar">
+  <div class="logo">
+    <img src="images/logo.png" alt="Infinity Kora Logo" />
+  </div>
+  <ul class="nav-links">
+    <li><a href="#" class="nav-link active">Home</a></li>
+    <li><a href="championship.html" class="nav-link">Champions</a></li>
+    <li><a href="videos.html" class="nav-link">Videos</a></li>
+  </ul>
+
+  <!-- ✅ Profile icon + dropdown -->
+  <div class="profile-dropdown">
+    <img src="images/user-placeholder.png" alt="User" class="profile-icon" id="user-avatar" />
+    <div class="dropdown-menu hidden">
+      <a href="#" class="dropdown-item" id="edit-profile-btn">Edit My Profile</a>
+      <a href="index.html" class="dropdown-item logout">Log Out</a>
+    </div>
+  </div>
+</nav>
+
+<!-- ✅ Dashboard Content -->
+<main class="container">
+  <section class="welcome-section">
+    <div class="welcome-text">
+      <h1>Welcome back, <span id="playerName">Player</span></h1>
+      <p>Ready to dominate the field today?</p>
+    </div>
+    <div class="rank-box">
+      <p>Current Rank</p>
+      <span id="playerRank">#--</span>
+    </div>
+  </section>
+
+  <section class="stats-row">
+    <div class="stat-card points">
+      <h3>Points</h3>
+      <p id="playerPoints">0</p>
+    </div>
+    <div class="stat-card goals">
+      <h3>Goals Scored</h3>
+      <p id="goalsScored">0</p>
+    </div>
+  </section>
+
+  <section class="stats-row">
+    <div class="stat-card match">
+      <h3>Next Match</h3>
+      <div class="match-info" id="matchInfo">Loading...</div>
+    </div>
+    <div class="stat-card video">
+      <h3>Team Video</h3>
+      <p>Coming soon...</p>
+    </div>
+  </section>
+
+<section>
+  <div style="display: flex; justify-content: space-between; align-items: center;">
+    <h3 class="section-title">Your Teammates</h3>
+    <a href="#" id="viewAllTeam" style="color: #2196f3; text-decoration: underline; font-weight: bold;">View All</a>
+  </div>
+  <div class="teammates" id="teammatesList">
+    <!-- teammates will render here -->
+  </div>
+</section>
+
+</main>
+
+<!-- ✅ Edit Profile Popup -->
+<div id="edit-profile-popup" class="popup-overlay hidden">
+  <div class="popup-box">
+    <span class="close-btn" id="close-edit-popup">&times;</span>
+    <h2 class="popup-title">Edit My Profile</h2>
+
+    <div class="profile-image-section">
+      <img id="edit-profile-pic" src="images/user-placeholder.png" alt="Profile" />
+      <input type="file" id="profile-image-upload" accept="image/*">
+    </div>
+
+    <form id="edit-profile-form">
+      <input type="text" id="edit-fullname" placeholder="Full Name" required />
+      <input type="number" id="edit-age" placeholder="Age" min="10" max="100" required />
+      <select id="edit-city" required>
+        <option value="">Select City</option>
+        <option value="Cairo">Cairo</option>
+        <option value="Alexandria">Alexandria</option>
+  <option value="Giza">Giza</option>
+  <option value="Port Said">Port Said</option>
+  <option value="Mansoura">Mansoura</option>
+  <option value="Zagazig">Zagazig</option>
+      </select>
+      <input type="email" id="edit-email" placeholder="Email" required />
+      <input type="text" id="edit-phone" placeholder="Phone Number" required />
+      <input type="password" id="edit-current-password" placeholder="Current Password" required />
+      <input type="password" id="edit-new-password" placeholder="New Password"/>
+      <input type="password" id="edit-confirm-password" placeholder="Confirm New Password"/>
+
+      <div class="form-buttons">
+        <button type="button" id="cancel-edit-btn">Cancel</button>
+        <button type="submit" id="save-edit-btn">Save Changes</button>
+      </div>
+
+      <p id="edit-message"></p>
+    </form>
+  </div>
+</div>
+
+<!-- ✅ Add Member Modal -->
+<div id="addTeammateModal" class="modal hidden">
+  <div class="modal-content">
+    <span class="close-btn" onclick="closeTeammateModal()">×</span>
+    <img src="images/logo.png" class="modal-logo" alt="Logo" />
+    <h2>Add Member</h2>
+    <input type="text" id="teammateInput" placeholder="Enter teammate's email or phone" />
+    <button onclick="addTeammate()">Add</button>
+    <div id="teammateMessage" class="modal-message"></div>
+  </div>
+</div>
+
+<!-- ✅ NEW View All Team Modal (Fully Styled) -->
+<div id="viewTeamModal" class="modal hidden">
+  <div class="modal-content wide">
+
+    <!-- Team Header Info -->
+<div class="team-header">
+  <div style="display: flex; align-items: center; gap: 15px;">
+    <img id="teamLogo" src="images/user-placeholder.png" />
+    <div>
+      <h2 id="teamNameDisplay">team</h2>
+      <div id="teamRankDisplay">Rank #--</div>
+    </div>
+  </div>
+
+  <div style="display: flex; align-items: flex-start; gap: 12px;">
+    <div class="edit-menu">
+      <img src="images/icons/icon-edit.png" id="editMenuTrigger" />
+      <div id="editDropdown" class="dropdown hidden">
+        <p onclick="enableLogoEdit(this)">Edit Team Logo</p>
+        <p onclick="enableNameEdit(this)">Edit Team Name</p>
+      </div>
+    </div>
+    <span class="close-btn" onclick="viewModal.classList.add('hidden')">×</span>
+  </div>
+</div>
+
+<!-- Hidden by default -->
+<div id="teamLogoEditor" class="popup-section hidden">
+  <input type="file" id="uploadTeamLogo" accept="image/*" />
+</div>
+
+<div id="teamNameEditor" class="popup-section hidden">
+  <input type="text" id="teamNameInput" placeholder="Team Name" />
+</div>
+
+
+    <!-- Team Members Display -->
+    <div class="team-members" id="fullTeamList">
+      <!-- JS renders here -->
+    </div>
+
+    <!-- Save Button -->
+    <div style="text-align: center; margin-top: 20px;">
+      <button class="save-btn" onclick="saveTeamChanges()">Save Changes</button>
+      <div id="teamSaveMessage" class="popup-message"></div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ✅ Footer -->
+<footer id="contact">
+  <h3>Contact Us</h3>
+  <p>📞 +201154456523 | 📧 example@email.com</p>
+  <div class="social-icons">
+    <img src="images/facebook.png" alt="Facebook" />
+    <img src="images/instagram.png" alt="Instagram" />
+    <img src="images/tiktok.png" alt="TikTok" />
+  </div>
+  <p>© 2025 Infinity Kora. All rights reserved.</p>
+</footer>
+
+</body>
+</html>

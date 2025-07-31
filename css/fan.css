@@ -1,0 +1,660 @@
+/* General Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background-color: #10141C;
+  font-family: 'Segoe UI', sans-serif;
+  color: white;
+  padding-top: 70px;
+}
+
+/* Navbar */
+.navbar {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  background: #161b22;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 24px;
+  z-index: 999;
+}
+
+.logo {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #00FF7F;
+}
+
+.nav-links {
+  display: flex;
+  gap: 24px;
+  list-style: none;
+}
+
+.nav-link {
+  color: white;
+  text-decoration: none;
+  position: relative;
+  transition: 0.2s;
+}
+
+.nav-link:hover,
+.nav-link.active {
+  color: #00FF7F;
+}
+
+.nav-link.active::after,
+.nav-link:hover::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -4px;
+  width: 100%;
+  height: 2px;
+  background: #00FF7F;
+}
+
+/* Profile Dropdown */
+.profile-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+  cursor: pointer;
+  border: 2px solid #00FF7F;
+}
+
+.profile-dropdown {
+  position: relative;
+}
+
+.dropdown-menu {
+  position: absolute;
+  right: 0;
+  top: 50px;
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(8px);
+  border-radius: 8px;
+  padding: 8px 0;
+  display: flex;
+  flex-direction: column;
+  width: 160px;
+}
+
+.dropdown-item {
+  padding: 10px 16px;
+  color: white;
+  text-decoration: none;
+  transition: background 0.2s;
+}
+
+.dropdown-item:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.dropdown-item.logout {
+  color: red;
+  text-decoration: underline;
+}
+
+/* Welcome Section */
+.welcome-section {
+  text-align: center;
+  padding: 40px 16px;
+}
+
+.welcome-section h2 {
+  color: #00ff88;
+  font-size: 2rem;
+}
+
+.stats {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  flex-wrap: wrap;
+  margin-top: 30px;
+}
+
+.stat {
+  background: #181F2B;
+  padding: 20px 30px;
+  border-radius: 12px;
+  min-width: 120px;
+  text-align: center;
+  box-shadow: 0 0 10px #000;
+}
+
+.stat h3 {
+  color: #00FF7F;
+  font-size: 1.8rem;
+}
+
+/* Latest Videos */
+.latest-videos {
+  padding: 40px 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.video-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 24px;
+  margin-top: 20px;
+}
+
+.video-card {
+  background: #181F2B;
+  border-radius: 12px;
+  overflow: hidden;
+  padding: 12px;
+}
+
+.video-card img {
+  width: 100%;
+  border-radius: 8px;
+}
+
+.video-card .info {
+  margin-top: 10px;
+}
+
+.video-card .info h4 {
+  color: #00FF7F;
+  font-size: 1rem;
+}
+
+.video-card .info p {
+  font-size: 0.9rem;
+  color: #ccc;
+}
+
+/* Match Section */
+.next-match {
+  padding: 40px 20px;
+  margin-bottom: 50px;
+}
+
+.match-card {
+  background: #181F2B;
+  border-radius: 16px;
+  padding: 30px;
+  text-align: center;
+  box-shadow: 0 0 20px #00ff804f;
+  position: relative;
+}
+
+.teams {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 30px;
+  margin-bottom: 20px;
+}
+
+.team-logo {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+}
+
+.team-name {
+  margin-top: 10px;
+  color: #fff;
+  font-weight: bold;
+}
+
+.vs {
+  font-size: 24px;
+  color: white;
+}
+
+.match-info {
+  color: #ccc;
+  margin-bottom: 20px;
+}
+
+.countdown {
+  color: #00FF7F;
+  font-size: 1.2rem;
+}
+
+.remaining {
+  font-size: 0.9rem;
+  color: white;
+}
+
+.vote-btn {
+  margin-top: 20px;
+  padding: 10px 20px;
+  background: #00FF7F;
+  color: #000;
+  font-weight: bold;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.vote-btn:disabled {
+  background: gray;
+  cursor: not-allowed;
+}
+
+/* Popup */
+.popup {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(13, 17, 23, 0.75);
+  backdrop-filter: blur(6px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+.popup.hidden {
+  display: none;
+}
+
+.popup-content {
+  background: #181F2B;
+  border-radius: 16px;
+  padding: 30px;
+  text-align: center;
+  max-width: 400px;
+  width: 90%;
+  position: relative;
+}
+
+.popup-content h3 {
+  margin-bottom: 20px;
+  color: #fff;
+}
+
+.vote-options {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  gap: 20px;
+}
+
+.vote-team {
+  cursor: pointer;
+  padding: 10px;
+  border: 2px solid transparent;
+  border-radius: 8px;
+  transition: 0.3s;
+}
+
+.vote-team:hover {
+  border-color: #00FF7F;
+  background: rgba(198, 255, 0, 0.1);
+}
+
+.vote-team img {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+}
+
+.vote-team p {
+  color: #fff;
+  margin-top: 8px;
+}
+
+.close-popup {
+  position: absolute;
+  top: 10px;
+  right: 20px;
+  font-size: 24px;
+  color: white;
+  cursor: pointer;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .stats {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .vote-options {
+    flex-direction: column;
+  }
+}
+.site-logo {
+  height: 60px;
+  object-fit: contain;
+}
+.dropdown-menu {
+  position: absolute;
+  right: 10px;
+  top: 60px;
+  background-color: rgba(0, 0, 0, 0.9);
+  padding: 10px 20px;
+  border-radius: 8px;
+  z-index: 1000;
+  transition: opacity 0.3s ease;
+}
+
+.dropdown-item {
+  display: block;
+  color: white;
+  text-decoration: none;
+  margin: 5px 0;
+}
+
+.dropdown-item.logout {
+  color: red;
+  text-decoration: underline;
+}
+
+.hidden {
+  display: none;
+}
+.vote-btn {
+  margin-top: 10px;
+  padding: 10px 20px;
+  background-color: #00FF7F;
+  color: black;
+  font-weight: bold;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.vote-btn:hover {
+  background-color: #b0f000;
+}
+/* ✅ Edit Profile Popup */
+.popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(30, 30, 30, 0.6);
+  backdrop-filter: blur(6px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+}
+.popup-overlay.hidden {
+  display: none;
+}
+
+.popup-box {
+  background: #181F2B;
+  padding: 20px;
+  border-radius: 50px;
+  box-shadow: 0 0 20px #00FF7F;
+  max-width: 400px;
+  width: 30%;
+  position: relative;
+  color: white;
+}
+
+.popup-title {
+  text-align: center;
+  color: #00FF7F;
+  margin-bottom: 15px;
+}
+
+.close-btn {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  color: white;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.profile-image-section {
+  text-align: center;
+  margin-bottom: 15px;
+}
+
+.profile-image-section img {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-bottom: 10px;
+}
+
+#profile-image-upload {
+  color: white;
+  display: block;
+  margin: 0 auto 15px auto;
+}
+
+#edit-profile-form input,
+#edit-profile-form select {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 10px;
+  border: none;
+  background-color: #333;
+  color: white;
+}
+
+#edit-profile-form .form-buttons {
+  display: flex;
+  justify-content: space-between;
+}
+
+#edit-profile-form button {
+  padding: 10px 15px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+#cancel-edit-btn {
+  background: gray;
+  color: white;
+}
+
+#save-edit-btn {
+  background: #00FF7F;
+  color: black;
+  font-weight: bold;
+}
+
+#edit-message {
+  text-align: center;
+  margin-top: 10px;
+  font-weight: bold;
+}
+
+#edit-message.success {
+  color: #00e676;
+}
+
+#edit-message.error {
+  color: red;
+}
+
+@media (max-width: 500px) {
+  .popup-box {
+    max-width: 95%;
+  }
+}
+/* ====== FOOTER ====== */
+footer {
+  background-color: #161b22;
+  text-align: center;
+  padding: 30px 20px;
+}
+
+footer h3 {
+  color: #00FF7F;
+  margin-bottom: 10px;
+}
+
+footer p {
+  margin: 5px 0;
+}
+
+.social-icons img {
+  width: 30px;
+  margin: 10px;
+  cursor: pointer;
+}
+.vote-btn,
+#save-edit-btn,
+#cancel-edit-btn {
+  background: linear-gradient(to right, #00FF7F, #00BFFF);
+  color: white;
+  border: none;
+}
+button,
+button * {
+  color: black !important;
+  font-weight: bold;
+  background: linear-gradient(to right, #00FF7F, #00BFFF);
+  padding: 10px 20px;
+  border: none;
+  border-radius: 10px; /* Square corners */
+  cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+/* Gradient for "Contact Us" footer title */
+footer h3 {
+  background: linear-gradient(to right, #00FF7F, #00BFFF);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+/* Add this to the CSS file for Welcome and Full Name */
+.welcome-section h2,
+#username {
+  background: linear-gradient(to right, #00FF7F, #00BFFF);
+  -webkit-background-clip: text;
+  color: transparent;
+}
+/* Apply the gradient to elements with class 'gradient-text' */
+.gradient-text {
+  background: linear-gradient(to right, #00FF7F, #00BFFF);
+  -webkit-background-clip: text;
+  color: transparent;
+  text-align: center;
+
+}
+/* Add shadow to all cards */
+.card-box,
+.video-card,
+.match-card {
+  box-shadow: 0 0 20px rgba(0, 255, 128, 0.31); /* Shadow color: #00ff804f */
+}
+
+/* Add shadow to all popups */
+.popup-content,
+.popup-overlay,
+.modal-content {
+  box-shadow: 0 0 20px rgba(0, 255, 128, 0.31); /* Shadow color: #00ff804f */
+}
+/* Add space between Next Match heading and the match card */
+.next-match h2 {
+  margin-bottom: 20px; /* Adjust this value to increase/decrease the space */
+}
+/* Profile Icon */
+.profile-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+  cursor: pointer;
+  border: 2px solid #c6ff00;
+}
+
+/* Dropdown Menu */
+.profile-dropdown {
+  position: relative;
+}
+
+.dropdown-menu {
+  position: absolute;
+  right: 0;
+  top: 50px;
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(8px);
+  border-radius: 8px;
+  padding: 8px 0;
+  display: flex;
+  flex-direction: column;
+  width: 160px;
+}
+
+.dropdown-item {
+  padding: 10px 16px;
+  color: white;
+  text-decoration: none;
+  transition: background 0.2s;
+}
+
+.dropdown-item:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.dropdown-item.logout {
+  color: red;
+  text-decoration: underline;
+}
+
+/* Hidden Class */
+.dropdown-menu.hidden {
+  display: none;
+}
+/* === Glowing Shadow & Border for Cards, Popups, Circles === */
+.stat-card,
+.match-card,
+.video-card,
+.modal-content,
+.modal-content.wide,
+.popup-box,
+.popup-content,
+.teammate img,
+.member img,
+#teamLogo,
+.profile-box,
+.profile-icon {
+  box-shadow:
+    -2px 2px 20px -2px rgba(0, 191, 255, 0.15),
+    2px 2px 20px -2px rgba(0, 255, 127, 0.15);
+  border: 1px solid rgba(0, 255, 127, 0.2);
+  border-radius: 36px;
+}
+/* === Global Styling for Form Fields === */
+
+/* For all input, select, textarea fields */
+input,
+select,
+textarea {
+  background-color: white !important;  /* White background for input fields */
+  color: black !important;             /* Black text */
+  border: 1px solid #ccc !important;  /* Light grey border */
+  padding: 10px;                       /* Adequate padding for easy text input */
+  border-radius: 6px;                  /* Rounded corners */
+  font-size: 14px;                     /* Ensuring readability */
+}
+
+/* For Disabled Fields (Grayed out) */
+input:disabled,
+select:disabled,
+textarea:disabled {
+  background-color: #f0f0f0 !important; /* Light gray background for disabled fields */
+  color: #aaa !important;               /* Grayed out text */
+  border-color: #ddd !important;        /* Light grey border */
+}

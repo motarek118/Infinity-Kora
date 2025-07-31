@@ -1,0 +1,734 @@
+/* ====== GLOBAL SETTINGS ====== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  scroll-behavior: smooth;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+  background-color: #10141C;
+  color: white;
+}
+
+/* ====== NAVBAR ====== */
+#navbar {
+  position: fixed;
+  width: 100%;
+  padding: 15px 30px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: background-color 0.3s ease;
+  z-index: 1000;
+  background-color: transparent;
+}
+
+#navbar.scrolled {
+  background-color: rgba(0, 0, 0, 0.642);
+}
+
+.nav-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.logo {
+  width: 100px;
+}
+
+nav ul {
+  list-style: none;
+  display: flex;
+  gap: 30px;
+}
+
+nav ul li a {
+  color: white;
+  text-decoration: none;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+nav ul li a.active,
+nav ul li a:hover {
+  color: #00FF7F;
+  text-decoration: underline;
+}
+
+/* ====== HERO SECTION ====== */
+.hero-section {
+  height: 100vh;
+  background: url('../images/background.jpg') center center/cover no-repeat;
+  position: relative;
+  display: flex;
+  align-items: center;
+  padding-left: 10%;
+}
+
+.hero-section::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.6); /* 40% opacity */
+  z-index: 1;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 2;
+  color: white;
+  max-width: 600px;
+}
+
+.hero-content h1 {
+  font-size: 40px;
+  color: #b91377;
+  margin-bottom: 10px;
+}
+
+.hero-content h2 {
+  font-size: 28px;
+  font-weight: bold;
+  margin-bottom: 15px;
+}
+
+.hero-content p {
+  font-size: 16px;
+  margin-bottom: 20px;
+}
+
+.hero-content button {
+  background-color: #ff008c;
+  color: black;
+  padding: 10px 25px;
+  border: none;
+  border-radius: 30px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.hero-content button:hover {
+  transform: scale(1.05);
+}
+
+/* ====== MODALS (Login & Sign Up) ====== */
+.modal {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%;
+  height: 100%;
+  backdrop-filter: blur(5px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;
+}
+
+.modal.hidden {
+  display: none;
+}
+
+.modal-content {
+  background-color: rgba(78, 77, 77, 0.861);
+  padding: 30px;
+  border-radius: 10px;
+  text-align: center;
+  width: 90%;
+  max-width: 400px;
+  position: relative;
+}
+
+.modal-logo {
+  width: 80px;
+  margin-bottom: 15px;
+}
+
+.close-btn {
+  position: absolute;
+  right: 15px;
+  top: 10px;
+  font-size: 20px;
+  color: white;
+  cursor: pointer;
+}
+
+.modal-content input,
+.modal-content select {
+  width: 100%;
+  margin: 8px 0;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+}
+
+.modal-content button {
+  margin-top: 10px;
+  background-color: #C6FF00;
+  color: black;
+  font-weight: bold;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 30px;
+  cursor: pointer;
+}
+
+.switch-modal span {
+  color: #00FF7F;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+/* ====== VISION SECTION ====== */
+.vision-section {
+  background-color: #1a1a1a;
+  text-align: center;
+  padding: 80px 20px;
+}
+
+.vision-section .vision-intro {
+  font-size: 16px;
+  margin-bottom: 40px;
+  line-height: 1.6;
+}
+
+.vision-section .vision-cards {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.vision-section .vision-card {
+  background-color: #292929;
+  padding: 20px;
+  border-radius: 10px;
+  width: 300px;
+  color: white;
+  box-shadow: 0 0 10px rgba(0,0,0,0.5);
+  transition: transform 0.3s ease;
+}
+
+.vision-section .vision-card:hover {
+  transform: scale(1.03);
+}
+
+.vision-section .vision-card h3 {
+  color: #00FF7F;
+  margin-bottom: 10px;
+  font-size: 20px;
+}
+
+.vision-section .vision-card p {
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+/* ====== EVENTS SECTION ====== */
+.events-section {
+  padding: 80px 20px;
+  background-color: #121212;
+  text-align: center;
+}
+
+.events-section h2 {
+  color: #00FF7F;
+  font-size: 30px;
+  margin-bottom: 30px;
+}
+
+/* ====== FOOTER ====== */
+footer {
+  background-color: #222;
+  text-align: center;
+  padding: 30px 20px;
+}
+
+footer h3 {
+  color: #C6FF00;
+  margin-bottom: 10px;
+}
+
+footer p {
+  margin: 5px 0;
+}
+
+.social-icons img {
+  width: 30px;
+  margin: 10px;
+  cursor: pointer;
+}
+
+/* ====== RESPONSIVE ====== */
+@media (max-width: 768px) {
+  nav ul {
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  .hero-content h1 {
+    font-size: 28px;
+  }
+
+  .hero-content h2 {
+    font-size: 20px;
+  }
+
+  .hero-content p {
+    font-size: 14px;
+  }
+
+  .modal-content {
+    padding: 20px;
+  }
+
+  .vision-section .vision-cards {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .vision-section .vision-card {
+    width: 90%;
+  }
+}
+@media (max-width: 768px) {
+  .profile-container {
+    padding: 1rem;
+    flex-direction: column;
+  }
+}
+body {
+  font-family: 'Segoe UI', sans-serif;
+  background-color: #10141C;
+  color: white;
+  margin: 0;
+  padding: 0;
+}
+
+.profile-container {
+  max-width: 600px;
+  margin: 50px auto;
+  background: #1e2a47;
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 0 20px rgba(0, 255, 200, 0.15);
+}
+
+h2 {
+  text-align: center;
+  margin-bottom: 1rem;
+  color: #ffffff;
+}
+
+.profile-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.profile-header img {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background-color: #ccc;
+  margin-right: 1rem;
+}
+
+.member-info h3 {
+  margin: 0;
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+.member-info p {
+  margin: 0;
+  color: #ccc;
+  font-size: 0.9rem;
+}
+
+.form-group {
+  margin-bottom: 1rem;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 0.3rem;
+  font-size: 0.9rem;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 0.6rem;
+  border: none;
+  border-radius: 8px;
+  background-color: #2c3e5a;
+  color: white;
+}
+
+.form-group input:disabled {
+  background-color: #3b4b64;
+  color: #aaa;
+}
+
+.form-actions {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 1.5rem;
+}
+
+.form-actions button {
+  padding: 0.6rem 1.2rem;
+  border: none;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+#cancelBtn {
+  background-color: #555;
+  color: white;
+}
+
+#saveChangesBtn {
+  background-color: #00ffc8;
+  color: #000;
+}
+
+@media (max-width: 600px) {
+  .profile-container {
+    margin: 20px;
+    padding: 1rem;
+  }
+
+  .form-actions {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .form-actions button {
+    width: 100%;
+  }
+
+  .profile-header {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .profile-header img {
+    margin-bottom: 0.5rem;
+  }
+}
+body {
+  margin: 0;
+  padding: 0;
+  background-color: #10141C;
+  color: #ffffff;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+.edit-profile-container {
+  max-width: 600px;
+  margin: 40px auto;
+  padding: 1rem;
+}
+
+.title {
+  text-align: center;
+  margin-bottom: 30px;
+  font-size: 1.8rem;
+  color: #ffffff;
+}
+
+.profile-box {
+  background-color: #161b22;
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 0 12px rgba(0, 255, 170, 0.15);
+}
+
+.profile-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.profile-image {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  background-color: #ccc;
+  object-fit: cover;
+}
+
+.profile-text h2 {
+  margin: 0;
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+
+.profile-text p {
+  margin: 0;
+  font-size: 0.9rem;
+  color: #a0a0a0;
+}
+
+.form-field {
+  margin-bottom: 1.4rem;
+}
+
+.form-field label {
+  display: block;
+  margin-bottom: 0.4rem;
+  font-size: 0.9rem;
+  color: #c5c5c5;
+}
+
+.form-field input {
+  width: 100%;
+  padding: 0.7rem 1rem;
+  background-color: #21262d;
+  color: #ffffff;
+  border: 1px solid #30363d;
+  border-radius: 6px;
+  font-size: 0.95rem;
+}
+
+.form-field input:disabled {
+  background-color: #2d333b;
+  color: #888;
+}
+
+.form-buttons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+.form-buttons button {
+  padding: 0.6rem 1.5rem;
+  font-weight: bold;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+@media (max-width: 992px) {
+  .container {
+    padding: 0 20px;
+  }
+
+  nav ul {
+    flex-direction: column;
+    gap: 20px;
+    text-align: center;
+  }
+
+  .hero-content {
+    text-align: center;
+    padding: 0 10px;
+  }
+}
+
+@media (max-width: 576px) {
+  h1, h2, h3 {
+    font-size: 90%;
+  }
+
+  button {
+    font-size: 90%;
+    padding: 8px 16px;
+  }
+
+  .vision-section .vision-cards {
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .modal-content {
+    width: 95% !important;
+  }
+
+  .footer p, .footer h3 {
+    font-size: 14px;
+  }
+}
+.modal {
+  position: fixed;
+  top: 0; left: 0;
+  z-index: 9999; /* ✅ high enough */
+}
+@media (max-width: 768px) {
+  nav ul {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    justify-content: start;
+    gap: 20px;
+    font-size: 14px;
+  }
+
+  nav ul::-webkit-scrollbar {
+    display: none;
+  }
+
+  .nav-container {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .logo {
+    width: 80px;
+  }
+
+  .hero-content h1 {
+    font-size: 24px;
+  }
+
+  .hero-content h2 {
+    font-size: 18px;
+  }
+
+  .hero-content p {
+    font-size: 14px;
+  }
+
+  #getStartedBtn {
+    font-size: 14px;
+    padding: 8px 18px;
+  }
+}
+.modal {
+  position: fixed;
+  inset: 0;
+  z-index: 9999 !important;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: rgba(0, 0, 0, 0.75);
+  backdrop-filter: blur(5px);
+}
+@media (max-width: 768px) {
+  nav ul {
+    display: flex;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    gap: 12px;
+    font-size: 14px;
+    padding-left: 10px;
+  }
+
+  nav ul li {
+    white-space: nowrap;
+  }
+
+  .logo {
+    width: 70px;
+  }
+
+  .nav-container {
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .hero-content {
+    padding-right: 10px;
+    padding-left: 10px;
+    text-align: center;
+  }
+
+  #getStartedBtn {
+    font-size: 14px;
+    padding: 10px 18px;
+  }
+}
+button,
+.modal-content button,
+.hero-content button {
+  background: linear-gradient(to right, #00FF7F, #00BFFF);
+  color: white;
+  border: none;
+}
+button,
+button * {
+  color: black !important;
+}
+/* Gradient Heading Style */
+.gradient-heading {
+  font-size: 40px;
+  font-weight: bold;
+  background: linear-gradient(to right, #00FF7F, #00BFFF);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-align: center;
+}
+/* Gradient for "OUR VISION" and "Upcoming Events" */
+.vision-section h2,
+.events-section h2 {
+  background: linear-gradient(to right, #00FF7F, #00BFFF);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Gradient for "Contact Us" */
+footer h3 {
+  background: linear-gradient(to right, #00FF7F, #00BFFF);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.events-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 24px;
+  margin-top: 30px;
+  padding: 0 20px;
+}
+
+.event-card {
+  background: #2b2b2b;
+  padding: 20px;
+  border-radius: 16px;
+  text-align: center;
+}
+
+.event-image {
+  width: 100%;
+  border-radius: 12px;
+  object-fit: cover;
+  margin-bottom: 15px;
+}
+
+.event-title {
+  font-size: 1rem;
+  font-weight: bold;
+  color: white;
+}
+/* === Global Styling for Form Fields === */
+
+/* For all input, select, textarea fields */
+input,
+select,
+textarea {
+  background-color: white !important;  /* White background for input fields */
+  color: black !important;             /* Black text */
+  border: 1px solid #ccc !important;  /* Light grey border */
+  padding: 10px;                       /* Adequate padding for easy text input */
+  border-radius: 6px;                  /* Rounded corners */
+  font-size: 14px;                     /* Ensuring readability */
+}
+
+/* For Disabled Fields (Grayed out) */
+input:disabled,
+select:disabled,
+textarea:disabled {
+  background-color: #f0f0f0 !important; /* Light gray background for disabled fields */
+  color: #aaa !important;               /* Grayed out text */
+  border-color: #ddd !important;        /* Light grey border */
+}

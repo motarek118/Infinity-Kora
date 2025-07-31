@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Championship | Infinity Kora</title>
+  <link rel="stylesheet" href="css/player-style.css" />
+  <script type="module" src="js/championship.js" defer></script>
+  <script type="module" src="js/player.js" defer></script>
+
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap">
+</head>
+<body>
+
+<!-- ✅ Navbar (Same as Player Page) -->
+<nav id="navbar">
+  <div class="logo">
+    <img src="images/logo.png" alt="Infinity Kora Logo" />
+  </div>
+  <ul class="nav-links">
+    <li><a href="player-home.html" class="nav-link">Home</a></li>
+    <li><a href="championship.html" class="nav-link active">Champions</a></li>
+    <li><a href="videos.html" class="nav-link">Videos</a></li>
+  </ul>
+
+<!-- ✅ Profile icon + dropdown -->
+<div class="profile-dropdown">
+  <img src="images/user-placeholder.png" alt="User" class="profile-icon" id="user-avatar" />
+  <div class="dropdown-menu hidden">
+    <a href="#" class="dropdown-item" id="edit-profile-btn">Edit My Profile</a>
+    <a href="index.html" class="dropdown-item logout">Log Out</a>
+  </div>
+</div>
+
+</nav>
+
+<!-- ✅ Main Sections -->
+<main class="container">
+  <!-- NOW Section -->
+  <section>
+    <h2 class="section-title">🔥 Now</h2>
+    <div id="nowChampionships" class="championship-grid"></div>
+  </section>
+
+  <!-- UPCOMING Section -->
+  <section>
+    <h2 class="section-title">🕒 Upcoming</h2>
+    <div id="upcomingChampionships" class="championship-grid"></div>
+  </section>
+
+  <!-- FINISHED Section -->
+  <section>
+    <h2 class="section-title">✅ Finished</h2>
+    <div id="finishedChampionships" class="championship-grid"></div>
+  </section>
+</main>
+
+<!-- ✅ Apply Popup -->
+<!-- ✅ 2-Step Apply Popup -->
+<div id="applyPopup" class="modal hidden">
+  <div class="modal-content wide">
+    <span class="close-btn" onclick="closeApplyPopup()">×</span>
+
+    <!-- Step Dots -->
+    <div class="step-dots">
+      <span id="stepDot1" class="dot active"></span>
+      <span id="stepDot2" class="dot"></span>
+    </div>
+
+    <!-- Scrollable Step Container -->
+    <div class="step-container" id="stepContainer">
+      <!-- STEP 1: Team Info -->
+      <div class="step">
+        <h2 style="color: #c6ff00; margin-bottom: 20px;">Confirm Your Registration</h2>
+        <div class="team-header">
+          <img id="applyTeamLogo" src="images/user-placeholder.png" />
+          <span id="applyTeamName">Team Name</span>
+        </div>
+
+        <div class="form-field">
+          <label>Team Members</label>
+          <input type="number" id="applyMembers" min="1" required />
+        </div>
+
+        <div class="form-field">
+          <label>Upload Team Video (optional)</label>
+          <input type="file" id="applyVideo" accept="video/*" />
+        </div>
+
+        <button onclick="nextStep()">Next</button>
+      </div>
+
+      <!-- STEP 2: Payment Info -->
+      <div class="step">
+        <h2 style="color: #c6ff00; margin-bottom: 20px;">Complete Your Payment</h2>
+  <div class="payment-icons">
+    <img src="images/icons/Instapay-icon.png" alt="Instapay" />
+    <img src="images/icons/Vodafone-icon.png" alt="Vodafone Cash" />
+    <img src="images/icons/E&-icon.png" alt="Etisalat Cash" />
+    <img src="images/icons/We-icon.png" alt="We Pay" />
+  </div>
+
+        <div class="form-field">
+          <label>Phone Number</label>
+          <input type="text" id="applyPhone" disabled />
+        </div>
+
+        <div class="form-field">
+          <label>Price (EGP)</label>
+          <input type="text" id="applyPrice" disabled />
+        </div>
+
+        <div class="form-field">
+          <label>Upload Payment Proof <span style="color: red;">*</span></label>
+          <input type="file" id="applyPaymentProof" accept="image/*" required />
+        </div>
+
+        <button onclick="submitApplication()">Done</button>
+        <p id="applyMessage" class="popup-message"></p>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ✅ Footer -->
+<footer id="contact">
+  <h3>Contact Us</h3>
+  <p>📞 +201154456523 | 📧 example@email.com</p>
+  <div class="social-icons">
+    <img src="images/facebook.png" alt="Facebook" />
+    <img src="images/instagram.png" alt="Instagram" />
+    <img src="images/tiktok.png" alt="TikTok" />
+  </div>
+  <p>© 2025 Infinity Kora. All rights reserved.</p>
+</footer>
+
+<!-- ✅ Edit Profile Popup -->
+<div id="edit-profile-popup" class="popup-overlay hidden">
+  <div class="popup-box">
+    <span class="close-btn" id="close-edit-popup">&times;</span>
+    <h2 class="popup-title">Edit My Profile</h2>
+
+    <div class="profile-image-section">
+      <img id="edit-profile-pic" src="images/user-placeholder.png" alt="Profile" />
+      <input type="file" id="profile-image-upload" accept="image/*">
+    </div>
+
+    <form id="edit-profile-form">
+      <input type="text" id="edit-fullname" placeholder="Full Name" required />
+      <input type="number" id="edit-age" placeholder="Age" min="10" max="100" required />
+      <select id="edit-city" required>
+        <option value="">Select City</option>
+      </select>
+      <input type="email" id="edit-email" placeholder="Email" required />
+      <input type="text" id="edit-phone" placeholder="Phone Number" required />
+      <input type="password" id="edit-current-password" placeholder="Current Password" required />
+      <input type="password" id="edit-new-password" placeholder="New Password"/>
+      <input type="password" id="edit-confirm-password" placeholder="Confirm New Password"/>
+
+      <div class="form-buttons">
+        <button type="button" id="cancel-edit-btn">Cancel</button>
+        <button type="submit" id="save-edit-btn">Save Changes</button>
+      </div>
+
+      <p id="edit-message"></p>
+    </form>
+  </div>
+</div>
+
+</body>
+</html>

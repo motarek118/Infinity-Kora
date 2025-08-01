@@ -658,20 +658,3 @@ textarea:disabled {
   color: #aaa !important;               /* Grayed out text */
   border-color: #ddd !important;        /* Light grey border */
 }
-nav ul {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: nowrap;      /* 🔒 Don't allow wrapping */
-  overflow-x: auto;       /* 🔁 Optional: scroll if too small */
-  white-space: nowrap;    /* 👌 Prevent text from breaking */
-  gap: 16px;              /* Spacing between links */
-  padding: 10px;
-  list-style: none;
-}
-@media (max-width: 600px) {
-  nav ul {
-    font-size: 13px;
-    gap: 8px;
-    padding: 5px;
-  }
-}

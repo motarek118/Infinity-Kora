@@ -487,11 +487,7 @@ body {
   color: red;
 }
 
-@media (max-width: 500px) {
-  .popup-box {
-    max-width: 95%;
-  }
-}
+
 /* ====== FOOTER ====== */
 footer {
   background-color: #161b22;

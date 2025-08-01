@@ -783,7 +783,6 @@ nav {
 
 @media (max-width: 768px) {
   .close-btn {
-    color: white !important;
-    fill: white !important;
+    color: rgb(255, 0, 0) !important;
   }
 }

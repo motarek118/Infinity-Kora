@@ -1769,7 +1769,7 @@ textarea:disabled {
 #navbar .logo img {
   height: 50px;  /* Consistent logo size */
 }
-/* Player Navbar - Update it to be identical to Fan Navbar */
+/* Player Navbar - Prevent Wrapping on Mobile */
 #navbar {
   position: fixed;
   top: 0;
@@ -1787,6 +1787,8 @@ textarea:disabled {
   display: flex;
   gap: 24px;  /* Same gap as fan navbar */
   list-style: none;
+  flex-wrap: nowrap;  /* Prevent text wrapping */
+  overflow-x: auto;   /* Allow horizontal scrolling */
 }
 
 .nav-link {
@@ -1794,6 +1796,7 @@ textarea:disabled {
   text-decoration: none;
   position: relative;
   transition: 0.2s;
+  white-space: nowrap;  /* Prevent text from breaking into new lines */
 }
 
 .nav-link:hover,
@@ -1852,4 +1855,22 @@ textarea:disabled {
 .dropdown-item.logout {
   color: red;
   text-decoration: underline;
+}
+
+/* Mobile view adjustment */
+@media (max-width: 768px) {
+  /* Reduce font size slightly and remove wrapping */
+  .nav-links {
+    gap: 16px;  /* Adjust the gap to avoid crowding */
+    flex-wrap: nowrap;  /* Prevent wrapping */
+  }
+
+  .nav-link {
+    font-size: 14px;  /* Reduce text size on mobile */
+  }
+
+  /* Ensure that the navbar doesn't collapse or wrap */
+  #navbar {
+    padding: 10px 15px;  /* Adjust padding for smaller screens */
+  }
 }

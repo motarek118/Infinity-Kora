@@ -1745,13 +1745,3 @@ nav ul {
   padding: 10px;
   list-style: none;
 }
-@media (max-width: 600px) {
-  nav ul {
-    font-size: 13px;
-    gap: 8px;
-    padding: 5px;
-  }
-}
-nav {
-  overflow-x: auto;
-}

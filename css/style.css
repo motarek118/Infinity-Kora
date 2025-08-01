@@ -778,11 +778,11 @@ nav {
 }
 /* Ensure close button is white on both mobile and desktop */
 .close-btn {
-  color: rgb(247, 2, 2);
+  color: rgb(255, 255, 255);
 }
 
 @media (max-width: 768px) {
   .close-btn {
-    color: rgb(255, 0, 0) !important;
+    color: rgb(255, 255, 255) !important;
   }
 }

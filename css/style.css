@@ -770,3 +770,33 @@ nav ul {
 nav {
   overflow-x: auto;
 }
+/* For Mobile */
+@media (max-width: 768px) {
+  .hero-content {
+    text-align: center;
+  }
+
+  .hero-content h1 {
+    font-size: 1.5rem;  /* Adjust font size if necessary */
+  }
+
+  .hero-content button {
+    margin: 20px auto;  /* Center the button */
+  }
+}
+/* Increase "Our Vision" text size on mobile */
+@media (max-width: 768px) {
+  #vision h2 {
+    font-size: 2.5rem;  /* Adjust size as needed */
+  }
+}
+/* Ensure close button is white on both mobile and desktop */
+.close-btn {
+  color: white;
+}
+
+@media (max-width: 768px) {
+  .close-btn {
+    color: white !important;
+  }
+}

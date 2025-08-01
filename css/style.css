@@ -732,3 +732,21 @@ textarea:disabled {
   color: #aaa !important;               /* Grayed out text */
   border-color: #ddd !important;        /* Light grey border */
 }
+/* Force horizontal navbar on mobile */
+nav ul {
+  display: flex !important;
+  flex-direction: row !important;
+  justify-content: center;
+  align-items: center;
+  gap: 20px; /* space between items */
+}
+
+nav ul li {
+  display: inline-block;
+}
+
+@media (max-width: 768px) {
+  nav ul {
+    flex-wrap: wrap; /* allow wrapping if too tight */
+  }
+}

@@ -778,11 +778,42 @@ nav {
 }
 /* Ensure close button is white on both mobile and desktop */
 .close-btn {
-  color: rgb(255, 255, 255);
+  color: #ffffff;
 }
 
 @media (max-width: 768px) {
   .close-btn {
-    color: rgb(255, 255, 255) !important;
+    color: #ffffff !important;
+  }
+}
+/* Hero Section: Center content for mobile view */
+@media (max-width: 768px) {
+  .hero-section {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    height: 100vh;  /* Ensure it takes the full screen height */
+    padding: 20px;
+  }
+
+  .hero-content h1,
+  .hero-content h2,
+  .hero-content button {
+    margin: 10px 0;
+  }
+
+  .hero-content h1 {
+    font-size: 32px;  /* Adjust font size if needed */
+  }
+
+  .hero-content h2 {
+    font-size: 24px;  /* Adjust font size if needed */
+  }
+
+  .hero-content button {
+    font-size: 16px;
+    padding: 12px 30px;
   }
 }

@@ -584,7 +584,7 @@ footer h3 {
   position: absolute;
   right: 0;
   top: 50px;
-  background: rgba(255, 255, 255, 0.05);
+  background: rgba(0, 0, 0, 0.441);
   backdrop-filter: blur(8px);
   border-radius: 8px;
   padding: 8px 0;

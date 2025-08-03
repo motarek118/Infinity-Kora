@@ -1744,3 +1744,37 @@ textarea:disabled {
     display: flex;
   }
 }
+.match-card {
+  position: relative;
+  background: #181F2B;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 0 12px rgba(198, 255, 0, 0.15);
+  transition: transform 0.3s ease;
+  padding: 0; /* no extra space */
+}
+
+
+.match-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* ✅ Button inside image, centered at bottom */
+.match-card .apply-btn {
+  position: absolute;
+  bottom: 15px;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 10px 22px;
+  background: linear-gradient(to right, #00FF7F, #00BFFF);
+  border: none;
+  border-radius: 10px;
+  font-weight: bold;
+  color: black;
+  box-shadow: 0 0 10px #00ff8092;
+  cursor: pointer;
+  z-index: 2;
+}

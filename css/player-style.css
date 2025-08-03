@@ -1527,22 +1527,8 @@ footer p {
   padding-bottom: 50px; /* make room for button */
 }
 
-/* Position Apply Now button in bottom-right */
-.match-card .apply-btn {
-  position: absolute;
-  bottom: 12px;
-  right: 15px;
-  padding: 8px 20px;
-  border-radius: 8px;
-  font-weight: bold;
-  font-size: 13px;
-  background: linear-gradient(to right, #00FF7F, #00ff88);
-  color: black;
-  border: none;
-  box-shadow: 0 0 10px #00FF7F;
-  cursor: pointer;
-}
-.payment-icons {
+
+.payment-icon
   display: flex;
   justify-content: center;
   align-items: center;
@@ -1754,7 +1740,6 @@ textarea:disabled {
   padding: 0; /* no extra space */
 }
 
-
 .match-card img {
   width: 100%;
   height: 100%;
@@ -1768,7 +1753,7 @@ textarea:disabled {
   bottom: 15px;
   left: 50%;
   transform: translateX(-50%);
-  padding: 10px 22px;
+  padding: 10px 150px;
   background: linear-gradient(to right, #00FF7F, #00BFFF);
   border: none;
   border-radius: 10px;
@@ -1777,4 +1762,10 @@ textarea:disabled {
   box-shadow: 0 0 10px #00ff8092;
   cursor: pointer;
   z-index: 2;
+}
+.match-card {
+  width: 100%;
+  max-width: 1750px;
+  height: 460px; /* uniform height */
+  aspect-ratio: 16 / 10; /* ensures consistent shape across screen sizes */
 }

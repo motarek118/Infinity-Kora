@@ -19,6 +19,8 @@ import {
   uploadBytes,
   getDownloadURL
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-storage.js";
+import { updateProfileAvatar } from './player.js';  // Ensure we are calling the function
+
 // ✅ Cloudinary upload function
 async function uploadToCloudinary(file, folder = "infinity-kora") {
   const formData = new FormData();
@@ -57,7 +59,8 @@ let currentChampId = null;
 onAuthStateChanged(auth, async user => {
   if (!user) return location.href = "index.html";
   currentUser = user;
-
+    // Call the function to update the avatar image
+  updateProfileAvatar();
   await loadChampionships("championship_now", nowDiv, "Now");
   await loadChampionships("championship_upcoming", upcomingDiv, "Upcoming");
   await loadChampionships("championship_finished", finishedDiv, "Finished");

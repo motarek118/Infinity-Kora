@@ -439,3 +439,60 @@ window.saveTeamChanges = async () => {
     messageBox.classList.add("error");
   }
 };
+editForm.addEventListener("submit", async (e) => {
+  e.preventDefault();
+
+  const fullName = fullNameField.value.trim();
+  const age = parseInt(ageField.value);
+  const city = cityField.value;
+  const email = emailField.value.trim();
+  const phone = phoneField.value.trim();
+  const currentPass = currentPassField.value.trim();
+  const newPass = newPassField.value.trim();
+  const confirmPass = confirmPassField.value.trim();
+  const uid = auth.currentUser.uid;
+
+  if (!fullName || !age || !city || !email || !phone || !currentPass) {
+    return showEditMessage("❌ All fields are required", "error");
+  }
+
+  if (!email.includes("@") || phone.length !== 11 || !/^\d+$/.test(phone)) {
+    return showEditMessage("❌ Invalid email or phone", "error");
+  }
+
+  if (newPass && newPass !== confirmPass) {
+    return showEditMessage("❌ Passwords do not match", "error");
+  }
+
+  try {
+    const cred = EmailAuthProvider.credential(auth.currentUser.email, currentPass);
+    await reauthenticateWithCredential(auth.currentUser, cred);
+    if (newPass) await updatePassword(auth.currentUser, newPass);
+
+    let photoURL = editPic.src;
+
+    if (imageUpload.files.length > 0) {
+      const file = imageUpload.files[0];
+      photoURL = await uploadToCloudinary(file, "profiles");
+    }
+
+    await updateDoc(doc(db, "users", uid), {
+      fullName, age, city, phone, profile: photoURL
+    });
+
+    showEditMessage("✅ Profile updated. Logging out...", "success");
+
+    setTimeout(() => {
+      auth.signOut().then(() => location.href = "index.html");
+    }, 2000);
+
+  } catch (err) {
+    console.error("❌", err.message);
+    showEditMessage(err.code === "auth/wrong-password" ? "❌ Incorrect password" : "❌ Update failed", "error");
+  }
+});
+
+function showEditMessage(msg, type) {
+  editMsg.textContent = msg;
+  editMsg.className = type === "error" ? "error" : "success";
+}

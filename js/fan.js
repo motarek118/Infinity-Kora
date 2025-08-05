@@ -83,6 +83,8 @@ onAuthStateChanged(auth, async (user) => {
     votesEl.textContent = data.correctvotes || 0;
     pointsEl.textContent = data.totalpoints || 0;
     editPic.src = data.profile || "images/user-placeholder.png";
+    document.getElementById("user-avatar").src = data.profile || "images/user-placeholder.png";
+
   } else {
     await setDoc(userRef, {
       fullName: "Fan",
@@ -211,6 +213,8 @@ function loadEditPopup(uid) {
     emailField.value = auth.currentUser.email || "";
     phoneField.value = data.phone || "";
     editPic.src = data.profile || "images/user-placeholder.png";
+    document.getElementById("user-avatar").src = data.profile || "images/user-placeholder.png";
+
     document.getElementById("edit-profile-popup").classList.remove("hidden");
   });
 

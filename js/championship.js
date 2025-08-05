@@ -142,20 +142,16 @@ window.submitApplication = async () => {
     message.textContent = "Uploading...";
     const storage = getStorage();
 
-    // Upload payment proof
-    const proofFile = proofInput.files[0];
-    const proofRef = ref(storage, `applications/${currentUser.uid}_${currentChampId}/payment-proof`);
-    await uploadBytes(proofRef, proofFile);
-    const proofURL = await getDownloadURL(proofRef);
+   // Upload payment proof
+const proofFile = proofInput.files[0];
+const proofURL = await uploadToCloudinary(proofFile, "applications");
 
-    // Upload video (if any)
-    let videoURL = "";
-    if (videoInput.files.length > 0) {
-      const videoFile = videoInput.files[0];
-      const videoRef = ref(storage, `applications/${currentUser.uid}_${currentChampId}/video`);
-      await uploadBytes(videoRef, videoFile);
-      videoURL = await getDownloadURL(videoRef);
-    }
+// Upload video (if any)
+let videoURL = "";
+if (videoInput.files.length > 0) {
+  const videoFile = videoInput.files[0];
+  videoURL = await uploadToCloudinary(videoFile, "applications");
+}
 
     await setDoc(doc(db, "applications", `${currentUser.uid}_${currentChampId}`), {
       userId: currentUser.uid,

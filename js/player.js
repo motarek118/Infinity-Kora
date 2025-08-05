@@ -398,21 +398,14 @@ window.saveTeamChanges = async () => {
   messageBox.className = "popup-message";
 
   try {
-    // ✅ Upload logo image if selected
     const logoInput = document.getElementById("uploadTeamLogo");
     if (logoInput.files.length > 0) {
       const file = logoInput.files[0];
-      const storage = getStorage();
-      const refPath = ref(storage, `teams/${currentUser.uid}`);
-      await uploadBytes(refPath, file);
-      const logoURL = await getDownloadURL(refPath);
+      const logoURL = await uploadToCloudinary(file, "teams");
       updateData.logo = logoURL;
-
-      // ✅ Show new logo immediately
       document.getElementById("teamLogo").src = logoURL;
     }
 
-    // ✅ Update team name if changed
     const newName = document.getElementById("teamNameInput").value.trim();
     if (newName) {
       updateData.name = newName;
@@ -429,7 +422,6 @@ window.saveTeamChanges = async () => {
     messageBox.textContent = "✅ Team info updated!";
     messageBox.classList.add("success");
 
-    // ✅ Optionally close after save
     setTimeout(() => {
       viewModal.classList.add("hidden");
     }, 1500);
@@ -439,6 +431,7 @@ window.saveTeamChanges = async () => {
     messageBox.classList.add("error");
   }
 };
+
 editForm.addEventListener("submit", async (e) => {
   e.preventDefault();
 

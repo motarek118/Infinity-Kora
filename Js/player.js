@@ -92,6 +92,9 @@ onAuthStateChanged(auth, async (user) => {
 
   welcomeSpan.textContent = currentUserData.fullName || "Player";
   avatar.src = currentUserData.profile || "images/user-placeholder.png";
+  const avatarInDOM = document.getElementById("user-avatar");
+if (avatarInDOM) avatarInDOM.src = currentUserData.profile || "images/user-placeholder.png";
+
 
   const teamsSnap = await getDocs(collection(db, "teams"));
   for (const team of teamsSnap.docs) {

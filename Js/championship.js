@@ -19,6 +19,21 @@ import {
   uploadBytes,
   getDownloadURL
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-storage.js";
+// ✅ Cloudinary upload function
+async function uploadToCloudinary(file, folder = "infinity-kora") {
+  const formData = new FormData();
+  formData.append("file", file);
+  formData.append("upload_preset", "Infinity Kora"); // ✅ Exact name from your preset
+  formData.append("folder", folder);
+
+  const res = await fetch("https://api.cloudinary.com/v1_1/dgvqm1x8i/upload", {
+    method: "POST",
+    body: formData
+  });
+
+  const data = await res.json();
+  return data.secure_url; // ✅ Direct Cloudinary URL
+}
 
 let currentUser;
 
@@ -127,20 +142,16 @@ window.submitApplication = async () => {
     message.textContent = "Uploading...";
     const storage = getStorage();
 
-    // Upload payment proof
-    const proofFile = proofInput.files[0];
-    const proofRef = ref(storage, `applications/${currentUser.uid}_${currentChampId}/payment-proof`);
-    await uploadBytes(proofRef, proofFile);
-    const proofURL = await getDownloadURL(proofRef);
+   // Upload payment proof
+const proofFile = proofInput.files[0];
+const proofURL = await uploadToCloudinary(proofFile, "applications");
 
-    // Upload video (if any)
-    let videoURL = "";
-    if (videoInput.files.length > 0) {
-      const videoFile = videoInput.files[0];
-      const videoRef = ref(storage, `applications/${currentUser.uid}_${currentChampId}/video`);
-      await uploadBytes(videoRef, videoFile);
-      videoURL = await getDownloadURL(videoRef);
-    }
+// Upload video (if any)
+let videoURL = "";
+if (videoInput.files.length > 0) {
+  const videoFile = videoInput.files[0];
+  videoURL = await uploadToCloudinary(videoFile, "applications");
+}
 
     await setDoc(doc(db, "applications", `${currentUser.uid}_${currentChampId}`), {
       userId: currentUser.uid,

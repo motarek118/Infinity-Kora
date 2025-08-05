@@ -48,12 +48,9 @@ saveBtn.addEventListener("click", async () => {
   try {
     let logoURL = teamLogoPreview.src;
 
-    if (teamLogoInput.files.length > 0) {
-      const file = teamLogoInput.files[0];
-      const storageRef = ref(storage, `team_logos/${currentUserId}`);
-      await uploadBytes(storageRef, file);
-      logoURL = await getDownloadURL(storageRef);
-    }
+const file = teamLogoInput.files[0];
+logoURL = await uploadToCloudinary(file, "team-logos");
+
 
     await setDoc(doc(db, "teams", currentUserId), {
       teamName: teamName,
@@ -159,13 +156,9 @@ window.saveTeamData = async function () {
     const userDocRef = doc(db, "users", user.uid);
 
     let logoURL = "";
+const file = teamLogoInput.files[0];
+logoURL = await uploadToCloudinary(file, "team-logos");
 
-    if (logoInput.files.length > 0) {
-      const file = logoInput.files[0];
-      const storageRef = ref(storage, `team-logos/${user.uid}`);
-      await uploadBytes(storageRef, file);
-      logoURL = await getDownloadURL(storageRef);
-    }
 
     await updateDoc(userDocRef, {
       teamName: teamName,

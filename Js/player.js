@@ -402,11 +402,8 @@ window.saveTeamChanges = async () => {
     const logoInput = document.getElementById("uploadTeamLogo");
     if (logoInput.files.length > 0) {
       const file = logoInput.files[0];
-      const storage = getStorage();
-      const refPath = ref(storage, `teams/${currentUser.uid}`);
-      await uploadBytes(refPath, file);
-      const logoURL = await getDownloadURL(refPath);
-      updateData.logo = logoURL;
+const logoURL = await uploadToCloudinary(file, "teams");
+updateData.logo = logoURL;
 
       // ✅ Show new logo immediately
       document.getElementById("teamLogo").src = logoURL;

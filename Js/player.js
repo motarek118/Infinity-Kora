@@ -41,6 +41,27 @@ async function uploadToCloudinary(file, folder = "infinity-kora") {
   const data = await res.json();
   return data.secure_url; // ✅ Direct Cloudinary URL
 }
+// Centralized function to update profile avatar from Cloudinary URL (stored in Firestore)
+async function updateProfileAvatar() {
+  const user = auth.currentUser;
+  if (!user) return;
+
+  const userDoc = await getDoc(doc(db, "users", user.uid));
+  if (!userDoc.exists()) return;
+
+  const currentUserData = userDoc.data();
+
+  // Update profile picture in the navbar
+  const avatarInDOM = document.getElementById("user-avatar");
+  if (avatarInDOM) avatarInDOM.src = currentUserData.profile || "images/user-placeholder.png";
+
+  // Update profile picture in the edit popup
+  const editPic = document.getElementById("edit-profile-pic");
+  if (editPic) editPic.src = currentUserData.profile || "images/user-placeholder.png";
+}
+
+// Call this function when the page loads
+updateProfileAvatar();
 
 let currentUser, currentUserData, leaderId = null;
 window.viewModal = document.getElementById("viewTeamModal");
@@ -84,26 +105,10 @@ const fullTeamList = document.getElementById("fullTeamList");
 // Auth check
 onAuthStateChanged(auth, async (user) => {
   if (!user) return location.href = "index.html";
-
-  // Fetch user data from Firestore
-  const userDoc = await getDoc(doc(db, "users", user.uid));
-  if (!userDoc.exists()) return;
-
-  const currentUserData = userDoc.data();
-
-  // Update profile picture in navbar (from Cloudinary URL in Firestore)
-  const avatarInDOM = document.getElementById("user-avatar");
-  if (avatarInDOM) avatarInDOM.src = currentUserData.profile || "images/user-placeholder.png";
-
-  // You can also update profile picture in the edit popup
-  const editPic = document.getElementById("edit-profile-pic");
-  if (editPic) editPic.src = currentUserData.profile || "images/user-placeholder.png";
-
-  // Continue with other logic, like user name and other stats
-  const welcomeSpan = document.getElementById("playerName");
-  welcomeSpan.textContent = currentUserData.fullName || "Player";
+  
+  // Call helper function to update profile image
+  updateProfileAvatar();
 });
-
 
 // Load rank
 async function loadRank(uid) {

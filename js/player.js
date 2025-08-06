@@ -193,19 +193,27 @@ function renderTeammate(uid, name, photo = "") {
 }
 
 // Load teammates
+// Load teammates
 async function loadTeammates(uid) {
-  teammatesList.innerHTML = "";
+  teammatesList.innerHTML = "";  // Clear existing teammates
+
+  // Add current user first
+  const currentUserDoc = await getDoc(doc(db, "users", uid));
+  if (currentUserDoc.exists()) {
+    const currentUserData = currentUserDoc.data();
+    renderTeammate(uid, currentUserData.fullName, currentUserData.profile || "images/user-placeholder.png");
+  }
+
   const teamDoc = await getDoc(doc(db, "teams", uid));
   const team = teamDoc.exists() ? teamDoc.data() : {};
   const members = team.members || [];
 
-  renderTeammate(uid, "You");
-
+  // Add teammates
   for (const memberId of members) {
     const memberDoc = await getDoc(doc(db, "users", memberId));
     if (memberDoc.exists()) {
       const m = memberDoc.data();
-      renderTeammate(memberId, m.fullName, m.profile);
+      renderTeammate(memberId, m.fullName, m.profile || "images/user-placeholder.png");
     }
   }
 
@@ -216,6 +224,7 @@ async function loadTeammates(uid) {
     teammatesList.appendChild(addBtn);
   }
 }
+
 
 // Render teammate UI
 function renderTeamMember(uid, name, photo = "", allowDelete = true) {

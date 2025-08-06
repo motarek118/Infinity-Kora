@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin Dashboard | Infinity Kora</title>
+  <link rel="stylesheet" href="css/player-style.css" />
+
+  <style>
+    body {
+      padding-top: 90px;
+      background-color: #0d1117;
+      color: white;
+    }
+    .admin-navbar {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      background-color: #161b22;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 24px;
+      z-index: 9999;
+      border-bottom: 1px solid #222;
+    }
+    .admin-navbar img {
+      height: 50px;
+    }
+    .admin-logout {
+      color: red;
+      text-decoration: underline;
+      cursor: pointer;
+      font-weight: bold;
+    }
+    .admin-tabs {
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+      margin-top: 40px;
+    }
+    .tab-btn {
+      padding: 10px 20px;
+      border-radius: 30px;
+      border: 2px solid transparent;
+      cursor: pointer;
+      font-weight: bold;
+      background: #0d1117;
+      color: white;
+      box-shadow: 0 0 0px transparent;
+    }
+    .tab-btn.active {
+      border-color: #c6ff00;
+      box-shadow: 0 0 12px #c6ff00;
+      background-color: #1a1a1a;
+    }
+    .tab-section {
+      display: none;
+      padding: 30px;
+      max-width: 1200px;
+      margin: auto;
+    }
+    .tab-section.active {
+      display: block;
+    }
+    .card-box {
+      background: #181F2B;
+      border-radius: 16px;
+      box-shadow: 0 0 24px rgba(198, 255, 0, 0.1);
+      padding: 30px;
+      margin-bottom: 40px;
+    }
+    .card-box h3 {
+      color: #eceee7;
+      margin-bottom: 20px;
+    }
+    .form-group {
+      margin-bottom: 20px;
+    }
+    .form-group label {
+      display: block;
+      color: #c6ff00;
+      font-weight: bold;
+      margin-bottom: 6px;
+    }
+    .form-group input {
+      width: 100%;
+      padding: 12px;
+      background: white;
+      color: black;
+      border: 1px solid #444;
+      border-radius: 6px;
+      font-weight: bold;
+    }
+    .form-group input[type="datetime-local"] {
+      color: #333;
+    }
+    .save-btn, .delete-btn {
+      background: #c6ff00;
+      color: black;
+      font-weight: bold;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      float: right;
+      margin-left: 10px;
+    }
+    .delete-btn {
+      background: red;
+      color: white;
+    }
+    .save-btn:hover, .delete-btn:hover {
+      filter: brightness(1.1);
+    }
+    .section-divider {
+      border-top: 1px solid #333;
+      margin: 40px 0 20px;
+    }
+    .media-upload-box input[type="file"] {
+      color: white;
+      margin-top: 10px;
+    }
+    .media-link {
+      color: #90ee90;
+      word-break: break-all;
+    }
+  </style>
+</head>
+<body>
+  <div class="admin-navbar">
+    <img src="images/logo.png" alt="Infinity Kora Logo" />
+    <div class="admin-logout" onclick="logoutAdmin()">Log Out</div>
+  </div>
+
+  <div class="admin-tabs">
+    <button class="tab-btn active" onclick="showTab('public')">Public</button>
+    <button class="tab-btn" onclick="showTab('players')">Players</button>
+    <button class="tab-btn" onclick="showTab('fans')">Fans</button>
+  </div>
+
+  <div id="public" class="tab-section active">
+    <h2 style="color: #ffffff; margin-bottom: 30px;">Public Controls</h2>
+
+    <div class="card-box">
+      <h3>🎥 Upload Video</h3>
+      <div class="form-group">
+        <label>Title</label>
+        <input type="text" id="videoTitle">
+      </div>
+      <div class="form-group">
+        <label>Video URL</label>
+        <input type="text" id="videoURL">
+      </div>
+      <div class="form-group">
+        <label>Duration (mm:ss)</label>
+        <input type="text" id="videoDuration">
+      </div>
+      <div class="form-group">
+        <label>Thumbnail URL</label>
+        <input type="text" id="videoThumbnail">
+      </div>
+      <button class="delete-btn" onclick="deleteAllVideos()">Delete All Videos</button>
+      <button class="save-btn" onclick="uploadVideo()">Upload Video</button>
+      <p id="videoMsg"></p>
+    </div>
+
+    <div class="card-box">
+      <h3>🏆 Add Upcoming Championship</h3>
+      <div class="form-group">
+        <label>Title</label>
+        <input type="text" id="champTitle">
+      </div>
+      <div class="form-group">
+        <label>Image URL</label>
+        <input type="text" id="champImage">
+      </div>
+      <button class="delete-btn" onclick="deleteAllChampionships()">Delete All Championships</button>
+      <button class="save-btn" onclick="uploadChampionship()">Add Championship</button>
+      <p id="champMsg"></p>
+    </div>
+
+    <div class="card-box">
+      <h3>⚽ Schedule Next Match</h3>
+      <div class="form-group">
+        <label>Team 1</label>
+        <input type="text" id="team1">
+      </div>
+      <div class="form-group">
+        <label>Team 2</label>
+        <input type="text" id="team2">
+      </div>
+      <div class="form-group">
+        <label>Location</label>
+        <input type="text" id="location">
+      </div>
+      <div class="form-group">
+        <label>Date & Time</label>
+        <input type="datetime-local" id="matchDatetime">
+      </div>
+      <button class="delete-btn" onclick="deleteNextMatch()">Delete Match</button>
+      <button class="save-btn" onclick="saveNextMatch()">Save Match</button>
+      <p id="matchMsg"></p>
+    </div>
+
+    <div class="card-box media-upload-box">
+      <h3>📤 Upload Media File</h3>
+      <input type="file" id="mediaUploadInput" />
+      <button class="save-btn" onclick="uploadMediaFile()">Upload & Get URL</button>
+      <p id="mediaUploadMsg"></p>
+      <p id="uploadedMediaURL" class="media-link"></p>
+    </div>
+  </div>
+
+  <div id="players" class="tab-section">
+    <div class="user-select-field">
+      <label for="playerSelect">Choose a Player:</label>
+      <select id="playerSelect">
+        <option value="">-- Select Player --</option>
+      </select>
+    </div>
+    <div id="playerEditFields"></div>
+  </div>
+
+  <div id="fans" class="tab-section">
+    <div class="user-select-field">
+      <label for="fanSelect">Choose a Fan:</label>
+      <select id="fanSelect">
+        <option value="">-- Select Fan --</option>
+      </select>
+    </div>
+    <div id="fanEditFields"></div>
+  </div>
+
+  <script>
+    function showTab(tabId) {
+      document.querySelectorAll(".tab-btn").forEach(btn => btn.classList.remove("active"));
+      document.querySelectorAll(".tab-section").forEach(section => section.classList.remove("active"));
+      document.querySelector(`.tab-btn[onclick*='${tabId}']`).classList.add("active");
+      document.getElementById(tabId).classList.add("active");
+    }
+    function logoutAdmin() {
+      localStorage.removeItem("adminLoggedIn");
+      window.location.href = "index.html";
+    }
+  </script>
+<script defer src="js/admin.js"></script>
+</body>
+</html>

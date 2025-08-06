@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Infinity Kora - Fan Dashboard</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="css/fan.css">
+  <script src="https://upload-widget.cloudinary.com/global/all.js" type="text/javascript"></script>
+
+</head>
+<body>
+
+  <!-- ✅ Navbar -->
+  <nav class="navbar">
+<div class="logo">
+  <img src="images/logo.png" alt="Infinity Kora Logo" class="site-logo">
+</div>
+    <ul class="nav-links">
+      <li><a href="#" class="nav-link active">Home</a></li>
+      <li><a href="videos.html" class="nav-link">Videos</a></li>
+      <li><a href="#next-match" class="nav-link" id="vote-scroll">Vote</a></li>
+    </ul>
+    <div class="profile-dropdown">
+      <img src="images/user-placeholder.png" alt="User" class="profile-icon" id="user-avatar">
+      <div class="dropdown-menu hidden">
+<a href="#" class="dropdown-item" id="edit-profile-btn">Edit My Profile</a>
+        <a href="index.html" class="dropdown-item logout">Log Out</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ✅ Welcome / Stats -->
+  <section class="welcome-section">
+    <h2>Welcome, <span id="username">Fan</span></h2>
+    <div class="stats">
+      <div class="stat">
+        <p>Videos Watched</p>
+        <h3 id="videos-watched">0</h3>
+      </div>
+      <div class="stat">
+        <p>Correct Votes</p>
+        <h3 id="correct-votes">0</h3>
+      </div>
+      <div class="stat">
+        <p>Total Points</p>
+        <h3 id="total-points">0</h3>
+      </div>
+    </div>
+  </section>
+
+  <!-- ✅ Latest Videos -->
+  <section class="latest-videos">
+    <h2 class="gradient-text">Latest Videos</h2>
+    <div class="video-grid">
+      <!-- Placeholder videos for now -->
+      <div class="video-card">
+        <img src="images/video1.jpg" alt="Video 1">
+        <div class="info">
+          <h4>Exciting Match Highlights</h4>
+          <p>Duration: 04:23</p>
+        </div>
+      </div>
+      <div class="video-card">
+        <img src="images/video2.jpg" alt="Video 2">
+        <div class="info">
+          <h4>Goal Compilation</h4>
+          <p>Duration: 03:51</p>
+        </div>
+      </div>
+      <div class="video-card">
+        <img src="images/video3.jpg" alt="Video 3">
+        <div class="info">
+          <h4>Penalty Shootout</h4>
+          <p>Duration: 02:15</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ✅ Next Match -->
+  <section id="next-match" class="next-match">
+    <h2 class="gradient-text">Next Match</h2>
+    <div class="match-card" id="match-info">
+      <!-- Filled by JS -->
+    </div>
+  </section>
+
+  <!-- ✅ Voting Popup -->
+  <div class="popup hidden" id="vote-popup">
+    <div class="popup-content">
+      <span class="close-popup">&times;</span>
+      <h3 style="color: white;">Choose the Winner</h3>
+      <div class="vote-options" id="vote-options">
+        <!-- Filled by JS -->
+      </div>
+    </div>
+  </div>
+  <script type="module" src="js/fan.js"></script>
+<!-- ✅ Edit Profile Popup -->
+<div id="edit-profile-popup" class="popup-overlay hidden">
+  <div class="popup-box">
+    <span class="close-btn" id="close-edit-popup">&times;</span>
+    <h2 class="popup-title">Edit My Profile</h2>
+
+    <div class="profile-image-section">
+      <img id="edit-profile-pic" src="images/user-placeholder.png" alt="Profile" />
+      <input type="file" id="profile-image-upload" accept="image/*">
+    </div>
+
+    <form id="edit-profile-form">
+      <input type="text" id="edit-fullname" placeholder="Full Name" required />
+      <input type="number" id="edit-age" placeholder="Age" min="10" max="100" required />
+      <select id="edit-city" required>
+        <option value="">Select City</option>
+        <!-- Cities will be added via JS -->
+      </select>
+      <input type="email" id="edit-email" placeholder="Email" required />
+      <input type="text" id="edit-phone" placeholder="Phone Number" required />
+      <input type="password" id="edit-current-password" placeholder="Current Password" required />
+      <input type="password" id="edit-new-password" placeholder="New Password"/>
+      <input type="password" id="edit-confirm-password" placeholder="Confirm New Password"/>
+
+      <div class="form-buttons">
+        <button type="button" id="cancel-edit-btn">Cancel</button>
+        <button type="submit" id="save-edit-btn">Save Changes</button>
+      </div>
+
+      <p id="edit-message"></p>
+    </form>
+  </div>
+</div>
+ <!-- Footer / Contact -->
+  <footer id="contact">
+    <h3>Contact Us</h3>
+    <p>📞 +201154456523 | 📧 example@email.com</p>
+    <div class="social-icons">
+      <img src="images/facebook.png" alt="Facebook" />
+      <img src="images/instagram.png" alt="Instagram" />
+      <img src="images/tiktok.png" alt="TikTok" />
+    </div>
+    <p>© 2025 Infinity Kora. All rights reserved.</p>
+  </footer>
+</body>
+</html>

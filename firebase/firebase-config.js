@@ -34,17 +34,3 @@ const auth = getAuth(app);
 const db = getFirestore(app);
 
 export { app, auth, db };
-async function uploadToCloudinary(file, folder = "infinity-kora") {
-  const formData = new FormData();
-  formData.append("file", file);
-  formData.append("upload_preset", "Infinity Kora"); // Ensure this matches the preset name
-  formData.append("folder", folder);
-
-  const res = await fetch("https://api.cloudinary.com/v1_1/dgvqm1x8i/upload", {
-    method: "POST",
-    body: formData
-  });
-
-  const data = await res.json();
-  return data.secure_url; // Return the Cloudinary URL
-}

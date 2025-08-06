@@ -26,28 +26,6 @@ import {
   uploadBytes,
   getDownloadURL
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-storage.js";
-// Centralized function to update profile avatar from Cloudinary URL (stored in Firestore)
-async function updateProfileAvatar() {
-  const user = auth.currentUser;
-  if (!user) return;
-
-  const userDoc = await getDoc(doc(db, "users", user.uid));
-  if (!userDoc.exists()) return;
-
-  const currentUserData = userDoc.data();
-
-  // Update profile picture in the navbar
-  const avatarInDOM = document.getElementById("user-avatar");
-  if (avatarInDOM) avatarInDOM.src = currentUserData.profile || "images/user-placeholder.png";
-
-  // Update profile picture in the edit popup
-  const editPic = document.getElementById("edit-profile-pic");
-  if (editPic) editPic.src = currentUserData.profile || "images/user-placeholder.png";
-}
-
-// Call this function when the page loads
-updateProfileAvatar();
-
 // ✅ Cloudinary upload function
 async function uploadToCloudinary(file, folder = "infinity-kora") {
   const formData = new FormData();
@@ -106,26 +84,40 @@ const fullTeamList = document.getElementById("fullTeamList");
 // Auth check
 onAuthStateChanged(auth, async (user) => {
   if (!user) return location.href = "index.html";
+  currentUser = user;
 
-  // Fetch user data from Firestore
   const userDoc = await getDoc(doc(db, "users", user.uid));
   if (!userDoc.exists()) return;
+  currentUserData = userDoc.data();
 
-  const currentUserData = userDoc.data();
-
-  // Update profile picture in navbar (from Cloudinary URL in Firestore)
-  const avatarInDOM = document.getElementById("user-avatar");
-  if (avatarInDOM) avatarInDOM.src = currentUserData.profile || "images/user-placeholder.png";
-
-  // You can also update profile picture in the edit popup
-  const editPic = document.getElementById("edit-profile-pic");
-  if (editPic) editPic.src = currentUserData.profile || "images/user-placeholder.png";
-
-  // Continue with other logic, like user name and other stats
-  const welcomeSpan = document.getElementById("playerName");
   welcomeSpan.textContent = currentUserData.fullName || "Player";
-});
+  avatar.src = currentUserData.profile || "images/user-placeholder.png";
+  const avatarInDOM = document.getElementById("user-avatar");
+if (avatarInDOM) avatarInDOM.src = currentUserData.profile || "images/user-placeholder.png";
 
+
+  const teamsSnap = await getDocs(collection(db, "teams"));
+  for (const team of teamsSnap.docs) {
+    const members = team.data().members || [];
+    if (members.includes(user.uid)) {
+      leaderId = team.id;
+      break;
+    }
+  }
+
+  const targetUID = leaderId || user.uid;
+  const targetUserDoc = await getDoc(doc(db, "users", targetUID));
+  const targetData = targetUserDoc.exists() ? targetUserDoc.data() : {};
+
+  pointsSpan.textContent = targetData.points || 0;
+  goalsSpan.textContent = targetData.goals || 0;
+
+  await loadRank(targetUID);
+  await loadNextMatch();
+  await loadTeammates(targetUID);
+
+  if (!leaderId) loadTeamEditor();
+});
 
 // Load rank
 async function loadRank(uid) {

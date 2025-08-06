@@ -12,22 +12,6 @@ import {
   setDoc
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-import { updateProfileAvatar } from './player.js';  // Ensure we are calling the function
-// ✅ Cloudinary upload function
-async function uploadToCloudinary(file, folder = "infinity-kora") {
-  const formData = new FormData();
-  formData.append("file", file);
-  formData.append("upload_preset", "Infinity Kora"); // ✅ Exact name from your preset
-  formData.append("folder", folder);
-
-  const res = await fetch("https://api.cloudinary.com/v1_1/dgvqm1x8i/upload", {
-    method: "POST",
-    body: formData
-  });
-
-  const data = await res.json();
-  return data.secure_url; // ✅ Direct Cloudinary URL
-}
 
 const videoGrid = document.getElementById("videosGrid");
 const popup = document.getElementById("videoPopup");
@@ -42,50 +26,15 @@ const commentsList = document.getElementById("commentsList");
 const closeVideo = document.getElementById("closeVideo");
 
 let currentUser;
-import { updateProfileAvatar } from './player.js';  // Ensure this import is added
-
 onAuthStateChanged(auth, async (user) => {
-  if (user) {
-    updateProfileAvatar();  // Make sure this runs after user authentication
-  }
+  if (!user) return location.href = "index.html";
+  currentUser = user;
 
-    // Call the function to update the avatar image
-  updateProfileAvatar();
   const userRef = await getDoc(doc(db, "users", user.uid));
   const role = userRef.exists() ? userRef.data().role : "fan";
   loadNavbar(role);
   loadVideosWithAds();
 });
-document.getElementById("user-avatar").addEventListener("click", () => {
-  const dropdownMenu = document.querySelector(".dropdown-menu");
-  dropdownMenu.classList.toggle("hidden");  // Toggle the dropdown visibility
-});
-
-document.addEventListener("click", (e) => {
-  const profileIcon = document.getElementById("user-avatar");
-  const dropdownMenu = document.querySelector(".dropdown-menu");
-  if (!profileIcon.contains(e.target) && !dropdownMenu.contains(e.target)) {
-    dropdownMenu.classList.add("hidden");  // Close dropdown if clicked outside
-  }
-});
-function loadNavbar(role) {
-  const navUrl = role === "player" ? "player-home.html" : "fan-home.html";  // Load appropriate navbar
-  const cssHref = role === "player" ? "css/player-style.css" : "css/fan.css";  // Apply correct CSS based on role
-
-  const link = document.createElement("link");
-  link.rel = "stylesheet";
-  link.href = cssHref;
-  document.head.appendChild(link);  // Dynamically load CSS
-
-  fetch(navUrl).then(res => res.text()).then(html => {
-    const dom = new DOMParser().parseFromString(html, "text/html");
-    const nav = dom.querySelector("nav");
-    document.getElementById("navbar-container").innerHTML = nav.outerHTML;  // Inject the navbar
-
-    // Ensure the avatar gets updated here
-    updateProfileAvatar();  
-  });
-}
 
 function loadNavbar(role) {
   const navUrl = role === "player" ? "player-home.html" : "fan-home.html";

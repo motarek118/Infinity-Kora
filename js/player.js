@@ -193,27 +193,19 @@ function renderTeammate(uid, name, photo = "") {
 }
 
 // Load teammates
-// Load teammates
 async function loadTeammates(uid) {
-  teammatesList.innerHTML = "";  // Clear existing teammates
-
-  // Add current user first
-  const currentUserDoc = await getDoc(doc(db, "users", uid));
-  if (currentUserDoc.exists()) {
-    const currentUserData = currentUserDoc.data();
-    renderTeammate(uid, currentUserData.fullName, currentUserData.profile || "images/user-placeholder.png");
-  }
-
+  teammatesList.innerHTML = "";
   const teamDoc = await getDoc(doc(db, "teams", uid));
   const team = teamDoc.exists() ? teamDoc.data() : {};
   const members = team.members || [];
 
-  // Add teammates
+  renderTeammate(uid, "You");
+
   for (const memberId of members) {
     const memberDoc = await getDoc(doc(db, "users", memberId));
     if (memberDoc.exists()) {
       const m = memberDoc.data();
-      renderTeammate(memberId, m.fullName, m.profile || "images/user-placeholder.png");
+      renderTeammate(memberId, m.fullName, m.profile);
     }
   }
 
@@ -225,18 +217,21 @@ async function loadTeammates(uid) {
   }
 }
 
-
 // Render teammate UI
-function renderTeammate(uid, name, photo = "") {
+function renderTeamMember(uid, name, photo = "", allowDelete = true) {
   const box = document.createElement("div");
-  box.className = `teammate ${uid === currentUser.uid ? "main-user" : ""}`;  // Highlight the current user
+  box.className = "member";
   box.innerHTML = `
-    <img src="${photo || 'images/user-placeholder.png'}" alt="${name}" />
+    <img src="${photo}" onerror="this.src='images/user-placeholder.png'" />
     <span>${name}</span>
+    ${
+      allowDelete
+        ? `<img src="images/icons/icon-delete.png" class="remove-icon" onclick="removeTeammate('${uid}')">`
+        : ""
+    }
   `;
-  teammatesList.appendChild(box);
+  fullTeamList.appendChild(box);
 }
-
 
 // Profile dropdown
 profileIcon.addEventListener("click", () => {

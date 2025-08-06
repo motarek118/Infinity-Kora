@@ -26,6 +26,24 @@ import {
   uploadBytes,
   getDownloadURL
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-storage.js";
+export async function updateProfileAvatar() {
+  const user = auth.currentUser;
+  if (!user) return;  // Check if the user is authenticated
+
+  // Get user data from Firestore
+  const userDoc = await getDoc(doc(db, "users", user.uid));
+  if (!userDoc.exists()) return;  // If no user data exists, return
+
+  const currentUserData = userDoc.data();
+
+  // Find the avatar image element in the DOM
+  const avatarInDOM = document.getElementById("user-avatar");
+  if (avatarInDOM) {
+    // Set the avatar image source to the user's profile image (or placeholder if none exists)
+    avatarInDOM.src = currentUserData.profile || "images/user-placeholder.png";
+  }
+}
+
 // ✅ Cloudinary upload function
 async function uploadToCloudinary(file, folder = "infinity-kora") {
   const formData = new FormData();

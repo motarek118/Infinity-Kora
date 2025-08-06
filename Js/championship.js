@@ -1,8 +1,5 @@
-// championship.js
 import { auth, db } from "../firebase/firebase-config.js";
-import {
-  onAuthStateChanged
-} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 import {
   getDocs,
   getDoc,
@@ -19,8 +16,8 @@ import {
   uploadBytes,
   getDownloadURL
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-storage.js";
-import { updateProfileAvatar } from './player.js';  // Ensure we are calling the function
 
+let currentUser;
 // ✅ Cloudinary upload function
 async function uploadToCloudinary(file, folder = "infinity-kora") {
   const formData = new FormData();
@@ -36,8 +33,6 @@ async function uploadToCloudinary(file, folder = "infinity-kora") {
   const data = await res.json();
   return data.secure_url; // ✅ Direct Cloudinary URL
 }
-
-let currentUser;
 
 // DOM references
 const nowDiv = document.getElementById("nowChampionships");
@@ -56,38 +51,76 @@ const message = document.getElementById("applyMessage");
 let currentChampId = null;
 
 // Load all
-onAuthStateChanged(auth, async user => {
-  if (!user) return location.href = "index.html";
-  currentUser = user;
-    // Call the function to update the avatar image
-  updateProfileAvatar();
+import { updateProfileAvatar } from './player.js';  // Ensure this import is added
+
+onAuthStateChanged(auth, async (user) => {
+  if (user) {
+    updateProfileAvatar();  // Make sure this runs after user authentication
+  }
+  // Load championships data
   await loadChampionships("championship_now", nowDiv, "Now");
   await loadChampionships("championship_upcoming", upcomingDiv, "Upcoming");
   await loadChampionships("championship_finished", finishedDiv, "Finished");
 });
+document.getElementById("user-avatar").addEventListener("click", () => {
+  const dropdownMenu = document.querySelector(".dropdown-menu");
+  dropdownMenu.classList.toggle("hidden");  // Toggle the dropdown visibility
+});
+
+document.addEventListener("click", (e) => {
+  const profileIcon = document.getElementById("user-avatar");
+  const dropdownMenu = document.querySelector(".dropdown-menu");
+  if (!profileIcon.contains(e.target) && !dropdownMenu.contains(e.target)) {
+    dropdownMenu.classList.add("hidden");  // Close dropdown if clicked outside
+  }
+});
+function loadNavbar(role) {
+  const navUrl = role === "player" ? "player-home.html" : "fan-home.html";  // Load appropriate navbar
+  const cssHref = role === "player" ? "css/player-style.css" : "css/fan.css";  // Apply correct CSS based on role
+
+  const link = document.createElement("link");
+  link.rel = "stylesheet";
+  link.href = cssHref;
+  document.head.appendChild(link);  // Dynamically load CSS
+
+  fetch(navUrl).then(res => res.text()).then(html => {
+    const dom = new DOMParser().parseFromString(html, "text/html");
+    const nav = dom.querySelector("nav");
+    document.getElementById("navbar-container").innerHTML = nav.outerHTML;  // Inject the navbar
+
+    // Ensure the avatar gets updated here
+    updateProfileAvatar();  
+  });
+}
 
 async function loadChampionships(colName, container, type) {
   const snap = await getDocs(collection(db, colName));
+  if (snap.empty) {
+    console.log(`No data found in ${colName}`);
+    return;
+  }
+
   snap.forEach(docSnap => {
     const data = docSnap.data();
+    console.log('Championship Data:', data);  // Log the data to check its structure
+
     const card = document.createElement("div");
     card.className = "match-card";
     card.innerHTML = `
       <img src="${data.image}" alt="Championship Image" style="width: 100%; border-radius: 10px;">
-${type !== "Upcoming" ? `
-  <div style="position: absolute; top: 15px; right: 15px; background: white; color: black; padding: 5px 12px; border-radius: 20px; font-weight: bold; font-size: 13px;">
-    ${type}
-  </div>` : ""
-}
-
-      </div>
+      ${type !== "Upcoming" ? `
+        <div style="position: absolute; top: 15px; right: 15px; background: white; color: black; padding: 5px 12px; border-radius: 20px; font-weight: bold; font-size: 13px;">
+          ${type}
+        </div>` : ""
+      }
       <h3 style="margin-top: 10px;">${data.title}</h3>
-${type === "Upcoming" ? `<button class="apply-btn" onclick="openApplyPopup('${docSnap.id}', '${colName}')">Apply Now</button>` : ""}
+      ${type === "Upcoming" ? `<button class="apply-btn" onclick="openApplyPopup('${docSnap.id}', '${colName}')">Apply Now</button>` : ""}
     `;
     container.appendChild(card);
   });
 }
 
+// Function to open the apply popup and load championship and team data
 window.openApplyPopup = async (champId, colName) => {
   currentChampId = champId;
   popup.classList.remove("hidden");
@@ -102,7 +135,7 @@ window.openApplyPopup = async (champId, colName) => {
   teamLogo.src = team.logo || "images/user-placeholder.png";
   teamName.textContent = team.name || "Unnamed Team";
 
-  // Load champ info
+  // Load championship info
   const champSnap = await getDoc(doc(db, colName, champId));
   const champ = champSnap.data() || {};
   priceField.value = `${champ.price || 0} EGP`;
@@ -145,16 +178,16 @@ window.submitApplication = async () => {
     message.textContent = "Uploading...";
     const storage = getStorage();
 
-   // Upload payment proof
-const proofFile = proofInput.files[0];
-const proofURL = await uploadToCloudinary(proofFile, "applications");
+    // Upload payment proof
+    const proofFile = proofInput.files[0];
+    const proofURL = await uploadToCloudinary(proofFile, "applications");
 
-// Upload video (if any)
-let videoURL = "";
-if (videoInput.files.length > 0) {
-  const videoFile = videoInput.files[0];
-  videoURL = await uploadToCloudinary(videoFile, "applications");
-}
+    // Upload video (if any)
+    let videoURL = "";
+    if (videoInput.files.length > 0) {
+      const videoFile = videoInput.files[0];
+      videoURL = await uploadToCloudinary(videoFile, "applications");
+    }
 
     await setDoc(doc(db, "applications", `${currentUser.uid}_${currentChampId}`), {
       userId: currentUser.uid,
@@ -175,6 +208,7 @@ if (videoInput.files.length > 0) {
     message.className = "popup-message error";
   }
 };
+
 // Apply Popup Step Navigation
 let currentStep = 1;
 
@@ -197,3 +231,18 @@ window.closeApplyPopup = () => {
   backStep();
   document.getElementById("applyMessage").textContent = "";
 };
+
+// Function to update the profile avatar in navbar
+async function updateProfileAvatar() {
+  const user = auth.currentUser;
+  if (!user) return;
+
+  const userDoc = await getDoc(doc(db, "users", user.uid));
+  if (!userDoc.exists()) return;
+
+  const currentUserData = userDoc.data();
+
+  // Update profile picture in the navbar of championship page
+  const avatarInDOM = document.getElementById("user-avatar");
+  if (avatarInDOM) avatarInDOM.src = currentUserData.profile || "images/user-placeholder.png";  // Default avatar if not set
+}

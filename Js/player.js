@@ -26,21 +26,6 @@ import {
   uploadBytes,
   getDownloadURL
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-storage.js";
-// ✅ Cloudinary upload function
-async function uploadToCloudinary(file, folder = "infinity-kora") {
-  const formData = new FormData();
-  formData.append("file", file);
-  formData.append("upload_preset", "Infinity Kora"); // ✅ Exact name from your preset
-  formData.append("folder", folder);
-
-  const res = await fetch("https://api.cloudinary.com/v1_1/dgvqm1x8i/upload", {
-    method: "POST",
-    body: formData
-  });
-
-  const data = await res.json();
-  return data.secure_url; // ✅ Direct Cloudinary URL
-}
 // Centralized function to update profile avatar from Cloudinary URL (stored in Firestore)
 async function updateProfileAvatar() {
   const user = auth.currentUser;
@@ -62,6 +47,22 @@ async function updateProfileAvatar() {
 
 // Call this function when the page loads
 updateProfileAvatar();
+
+// ✅ Cloudinary upload function
+async function uploadToCloudinary(file, folder = "infinity-kora") {
+  const formData = new FormData();
+  formData.append("file", file);
+  formData.append("upload_preset", "Infinity Kora"); // ✅ Exact name from your preset
+  formData.append("folder", folder);
+
+  const res = await fetch("https://api.cloudinary.com/v1_1/dgvqm1x8i/upload", {
+    method: "POST",
+    body: formData
+  });
+
+  const data = await res.json();
+  return data.secure_url; // ✅ Direct Cloudinary URL
+}
 
 let currentUser, currentUserData, leaderId = null;
 window.viewModal = document.getElementById("viewTeamModal");

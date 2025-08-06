@@ -105,10 +105,26 @@ const fullTeamList = document.getElementById("fullTeamList");
 // Auth check
 onAuthStateChanged(auth, async (user) => {
   if (!user) return location.href = "index.html";
-  
-  // Call helper function to update profile image
-  updateProfileAvatar();
+
+  // Fetch user data from Firestore
+  const userDoc = await getDoc(doc(db, "users", user.uid));
+  if (!userDoc.exists()) return;
+
+  const currentUserData = userDoc.data();
+
+  // Update profile picture in navbar (from Cloudinary URL in Firestore)
+  const avatarInDOM = document.getElementById("user-avatar");
+  if (avatarInDOM) avatarInDOM.src = currentUserData.profile || "images/user-placeholder.png";
+
+  // You can also update profile picture in the edit popup
+  const editPic = document.getElementById("edit-profile-pic");
+  if (editPic) editPic.src = currentUserData.profile || "images/user-placeholder.png";
+
+  // Continue with other logic, like user name and other stats
+  const welcomeSpan = document.getElementById("playerName");
+  welcomeSpan.textContent = currentUserData.fullName || "Player";
 });
+
 
 // Load rank
 async function loadRank(uid) {
